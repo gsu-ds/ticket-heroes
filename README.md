@@ -1,8 +1,5 @@
 # Fundamentals of Data Science Project (Fall 2025)
 
-**Time to use Time Series Analysis and Save Some Money!**
-
-
 ## Abstract 
 
 Concert ticket prices fluctuate in an unexpected manner before the actual event. Instead of overpaying for bad tickets for the rest of our lives, we aim to build a data-driven recommendation system that predicts the optimal day to buy a ticket for a specific concert or artist, using time series forecasting and machine learning regression within a serverless (AWS Lambda) pipeline.
@@ -61,6 +58,5 @@ This project uses [GitHub Codespaces](https://github.com/features/codespaces) to
 
 ## Project Website
 
-👉 (project page will go here.)
-
+👉 [We Could be Heroes...](https://gsu-ds.github.io/ticket-heroes/)
 ---
