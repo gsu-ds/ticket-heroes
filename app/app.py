@@ -78,6 +78,25 @@ with tab_dashboard:
             '<div class="hero-title">Never Overpay for Live Events Again.</div>',
             unsafe_allow_html=True,
         )
+
+    if "search_text" not in st.session_state:
+        st.session_state["search_text"] = ""
+
+    EVENTS = [
+        "Drake: It's All A Blur",
+        "Taylor Swift: The Eras Tour",
+        "Bad Bunny: Most Wanted Tour",
+        "Miami Heat vs Lakers",
+    ]
+
+    st.markdown("### Search Events")
+    search_query = st.text_input(
+        "Search by artist, team, or event",
+        value=st.session_state["search_text"],
+        key="search_text",
+        placeholder="Try 'Drake', 'Miami Heat', 'Taylor Swift'...",
+    )
+
         st.markdown(
             '<div class="hero-subtitle">'
             "Data-driven price prediction using XGBoost Regression and Market Aggregation."
@@ -110,85 +129,29 @@ with tab_dashboard:
     col_inputs, col_outputs = st.columns([1.3, 1.7])
 
     # input
-    
     with col_inputs:
         st.markdown("### Model Inputs")
         st.caption("v.2.1 (XGBoost)")
 
-        EVENTS = [
-            "Drake: It's All A Blur",
-            "Taylor Swift: The Eras Tour",
-            "Bad Bunny: Most Wanted Tour",
-            "Miami Heat vs Lakers",
-            ]
-
-        QUICK_EVENTS = [
-            "Drake: It's All A Blur",
-            "Miami Heat vs Lakers",
-        ]
-
-        if "selected_event" not in st.session_state:
-            st.session_state["selected_event"] = EVENTS[0]
-
-        if "search_text" not in st.session_state:
-            st.session_state["search_text"] = ""
-        
-    # Search bar
-
-    st.markdown("**Search events**")
-    search_query = st.text_input(
-        "Search by artist, team, or event",
-        value=st.session_state["search_text"],
-        key="search_text",
-        label_visibility="collapsed",
-        placeholder="Search by artist, team, or event...",
-    )
-
-    # Filter events based on search
-    if search_query.strip():
-        filtered_events = [e for e in EVENTS if search_query.lower() in e.lower()]
-    else:
-        filtered_events = EVENTS.copy()
-
-    # no match
-    if not filtered_events:
-        filtered_events = EVENTS.copy()
-
-    # Quick action buttons
+        if search_query.strip():
+            filtered_events = [e for e in EVENTS if search_query.lower() in e.lower()]
+        else:
+            filtered_events = EVENTS.copy()
     
-    st.markdown("Quick picks:")
-    quick_cols = st.columns(len(QUICK_EVENTS))
+        if not filtered_events:
+            filtered_events = EVENTS.copy()
 
-    for i, q_event in enumerate(QUICK_EVENTS):
-        label = q_event.split(":")[0]  # Short label (e.g., "Drake")
-        if quick_cols[i].button(label, key=f"quick_{i}"):
-            st.session_state["selected_event"] = q_event
-            st.session_state["search_text"] = ""  # Clear search when clicking quick pick
-            st.experimental_rerun()
-
-    if st.session_state["selected_event"] not in filtered_events:
-        filtered_events = [st.session_state["selected_event"]] + [
-            e for e in filtered_events if e != st.session_state["selected_event"]
-        ]
-
-    # Determine default index for dropdown
-    try:
-        default_index = filtered_events.index(st.session_state["selected_event"])
-    except ValueError:
-        default_index = 0
-
-    # Event dropdown
-
+    # -----------------------------------------
+    # Event dropdown (auto-filtered)
+    # -----------------------------------------
     event = st.selectbox(
         "Event / Artist",
         filtered_events,
-        index=default_index,
-        key="event_select",
     )
 
-    st.session_state["selected_event"] = event
-
-   
+    # -----------------------------------------
+    # Remaining inputs
+    # -----------------------------------------
     days_until = st.slider(
         "Days Until Event", min_value=0, max_value=180, value=14, step=1
     )
@@ -213,6 +176,8 @@ with tab_dashboard:
 
     run = st.button("Run Prediction")
 
+    
+    
     #output
     with col_outputs:
         st.markdown("### Prediction & Recommendation")
