@@ -12,3 +12,6 @@ attempting to webscrape tourdatesearch.com and concertarchives.org
 after dataset is built up and aggregated, we need to clean and combine the datasets to create data panels, then build the models,
 modeling will be same strategy as capstone project, regressors + poisson + rolling cv on wandb tests
 
+
+setlist_fm -> api access works
+musicbrain json data dump -> 100k events
