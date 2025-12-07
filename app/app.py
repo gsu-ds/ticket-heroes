@@ -110,43 +110,108 @@ with tab_dashboard:
     col_inputs, col_outputs = st.columns([1.3, 1.7])
 
     # input
+    
     with col_inputs:
-        st.markdown("### Model Inputs")
-        st.caption("v.2.1 (XGBoost)")
+    st.markdown("### Model Inputs")
+    st.caption("v.2.1 (XGBoost)")
 
-        event = st.selectbox(
-            "Event / Artist",
-            [
-                "Drake: It's All A Blur",
-                "Taylor Swift: The Eras Tour",
-                "Bad Bunny: Most Wanted Tour",
-                "Miami Heat vs Lakers",
-            ],
-        )
+    EVENTS = [
+        "Drake: It's All A Blur",
+        "Taylor Swift: The Eras Tour",
+        "Bad Bunny: Most Wanted Tour",
+        "Miami Heat vs Lakers",
+    ]
 
-        days_until = st.slider(
-            "Days Until Event", min_value=0, max_value=180, value=14, step=1
-        )
+    QUICK_EVENTS = [
+        "Drake: It's All A Blur",
+        "Miami Heat vs Lakers",
+    ]
 
-        inventory = st.radio(
-            "Inventory Level",
-            [
-                "High (>2k)",
-                "Medium (500–2k)",
-                "Low (<500)",
-            ],
-        )
+    if "selected_event" not in st.session_state:
+        st.session_state["selected_event"] = EVENTS[0]
 
-        st.markdown("**Current Lowest List Price**")
-        current_price = st.number_input(
-            "Enter lowest listing price ($)",
-            min_value=0.0,
-            max_value=10000.0,
-            value=250.0,
-            step=5.0,
-        )
+    if "search_text" not in st.session_state:
+        st.session_state["search_text"] = ""
+        
+    # Search bar
 
-        run = st.button("Run Prediction")
+    st.markdown("**Search events**")
+    search_query = st.text_input(
+        "Search by artist, team, or event",
+        value=st.session_state["search_text"],
+        key="search_text",
+        label_visibility="collapsed",
+        placeholder="Search by artist, team, or event...",
+    )
+
+    # Filter events based on search
+    if search_query.strip():
+        filtered_events = [e for e in EVENTS if search_query.lower() in e.lower()]
+    else:
+        filtered_events = EVENTS.copy()
+
+    # no match
+    if not filtered_events:
+        filtered_events = EVENTS.copy()
+
+    # Quick action buttons
+    
+    st.markdown("Quick picks:")
+    quick_cols = st.columns(len(QUICK_EVENTS))
+
+    for i, q_event in enumerate(QUICK_EVENTS):
+        label = q_event.split(":")[0]  # Short label (e.g., "Drake")
+        if quick_cols[i].button(label, key=f"quick_{i}"):
+            st.session_state["selected_event"] = q_event
+            st.session_state["search_text"] = ""  # Clear search when clicking quick pick
+            st.experimental_rerun()
+
+    if st.session_state["selected_event"] not in filtered_events:
+        filtered_events = [st.session_state["selected_event"]] + [
+            e for e in filtered_events if e != st.session_state["selected_event"]
+        ]
+
+    # Determine default index for dropdown
+    try:
+        default_index = filtered_events.index(st.session_state["selected_event"])
+    except ValueError:
+        default_index = 0
+
+    # Event dropdown
+
+    event = st.selectbox(
+        "Event / Artist",
+        filtered_events,
+        index=default_index,
+        key="event_select",
+    )
+
+    st.session_state["selected_event"] = event
+
+   
+    days_until = st.slider(
+        "Days Until Event", min_value=0, max_value=180, value=14, step=1
+    )
+
+    inventory = st.radio(
+        "Inventory Level",
+        [
+            "High (>2k)",
+            "Medium (500–2k)",
+            "Low (<500)",
+        ],
+    )
+
+    st.markdown("**Current Lowest List Price**")
+    current_price = st.number_input(
+        "Enter lowest listing price ($)",
+        min_value=0.0,
+        max_value=10000.0,
+        value=250.0,
+        step=5.0,
+    )
+
+    run = st.button("Run Prediction")
 
     #output
     with col_outputs:
