@@ -93,10 +93,7 @@ with tab_dashboard:
     col_logo, col_title = st.columns([0.3, 1.7])
     with col_logo:
         st.image(logo, width=120)  # adjust size here
-    with col_title:
-        st.markdown('<div class="hero-title">Never Overpay for Live Events Again.</div>', unsafe_allow_html=True)
-        st.markdown('<div class="hero-subtitle">Data-driven price prediction using XGBoost Regression and Market Aggregation.</div>', unsafe_allow_html=True)
-
+    
     # Hero section
     col_hero_left, col_hero_right = st.columns([2, 1])
 
