@@ -4,59 +4,49 @@
 
 Concert ticket prices fluctuate in an unexpected manner before the actual event. Instead of overpaying for bad tickets for the rest of our lives, we aim to build a data-driven recommendation system that predicts the optimal day to buy a ticket for a specific concert or artist, using time series forecasting and machine learning regression within a serverless (AWS Lambda) pipeline.
 
-
-## 🧑‍🚀 Team
-
-We are an student research team searching for the perfect time to buy concert tickets.
-
-### Joshua Piña
-
-Data Science Senior graduating December 2025 with plans to pursue MS in Analytics.  
-Background in Python, applied probability & statistics, data analytics, big data programming, and ML.
-Experienced Program Manager in GovCon and former U.S. Army Combat Medic.<br><br>
-[![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://www.github.com/joshuadpina)
-[![GitHub Pages](https://img.shields.io/badge/Josh's-Portfolio-blue)](https://joshuapina.github.io/)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/joshuadpina/)
+> A serverless machine learning pipeline that transforms real-time concert ticket data into actionable purchase recommendations using time series forecasting and predictive analytics.
 
 
-### Harini Mohan
+## Project Overview
 
-Data Science student graduating Spring 2025 with a strong foundation in statistics and data analytics. 
-Passionate about using data to drive strategic business decisions.
-Currently a Business Analyst at Deloitte, where I help design a platform that streamlines workflows and tool adoption across teams. 
+Concert ticket prices fluctuate in an unexpected manner before the actual event. Instead of overpaying for bad tickets for the rest of our lives, we aim to build a data-driven recommendation system that predicts the optimal day to buy a ticket for a specific concert or artist.
 
----
+This project focuses on **predicting optimal purchase timing** for concert tickets to help consumers make informed decisions and avoid overpaying.
 
-## Goals
+### Goals
 
-- To design a model that intakes real-time data and outputs a recommendation on if you ahould buy that ticket now or at a later date.
+- Predict **optimal purchase timing** for concert tickets across multiple artists and venues
+- Deliver actionable insights through an **interactive recommendation system**
+- Support data-driven decision making for concert-goers
+- Benchmark multiple forecasting approaches using time series analysis and machine learning regression
 
-## Infrastructure & Tech Stack
-- tbd
-  
-##  Development Environment
+### Methodology
 
-This project uses [GitHub Codespaces](https://github.com/features/codespaces) to ensure a consistent, reproducible development setup.
+Leveraging real-time concert ticket pricing data, we construct an automated serverless pipeline (AWS Lambda) with:
 
---- 
+- **Temporal features**: Time-to-event, day-of-week, seasonal patterns
+- **Price dynamics**: Historical trends, volatility measures, rolling statistics
+- **Event characteristics**: Artist popularity, venue capacity, location data
+- **External factors**: Demand indicators and market conditions
 
-### Quick Start
+Models are evaluated using **R^2**, **RMSE**, **MAE**, and **directional accuracy** to assess predictive performance and real-world utility for purchase recommendations.
 
-1. **Open in Codespaces**  
-   Click the green **Code** button on this repository, then choose **Open with Codespaces** → **New codespace**.
 
-2. **Automatic setup**  
-   The dev container will automatically install Python and all required packages listed in `requirements.txt`.
+## Team
 
-3. **Activate the environment**  
-   When your Codespace starts, you’re ready to run scripts and notebooks immediately.
-   - If (dscvenv) does not show in terminal, follow these steps:
-      - Activate virtual env: (bash)-> source dscvenv/bin/activate or powershell-> ( dscvenv\Activate\scripts)
-      - Use requirements.txt to ensure installations: pip install -r requirements.txt
+**Data Science Team** (Alphabetically): Harini Mohan, Joshua Piña
 
----
+**Institution**: Georgia State University
+
+## Contact & Support
+
+### GitHub Issues
+[Report bugs or request features](https://github.com/gsu-ds/ticket-heroes/issues)
+
+### Email
+- Joshua Piña: jpina4@student.gsu.edu
+- Harini Mohan: hmohan1@student.gsu.edu
 
 ## Project Website
 
 👉 [We Could be Heroes...](https://gsu-ds.github.io/ticket-heroes/)
----
