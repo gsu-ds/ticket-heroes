@@ -60,3 +60,10 @@ urllib3-future==2.14.908
 wassima==2.0.2
 wcwidth==0.2.14
 yarl==1.22.0
+
+streamlit
+pandas
+numpy
+scikit-learn
+xgboost
+joblib
