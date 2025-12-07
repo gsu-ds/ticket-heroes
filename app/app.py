@@ -72,8 +72,10 @@ tab_dashboard, tab_methodology, tab_aggregator = st.tabs(
 with tab_dashboard:
     # Load and display logo
     from PIL import Image
+    from pathlib import Path
 
-    logo = Image.open("TicketProphetLogo.png")
+    LOGO_PATH = Path(__file__).parent / "TicketProphetLogo.png"
+    logo = Image.open(LOGO_PATH)
 
     st.markdown(
         """
