@@ -99,7 +99,7 @@ with tab_dashboard:
         "(inventory, days left) are used to estimate true market value versus the current list price."
     )
 
-
+    # Shared state + events
     if "search_text" not in st.session_state:
         st.session_state["search_text"] = ""
 
@@ -113,14 +113,12 @@ with tab_dashboard:
     # Two-column layout: LEFT = inputs, RIGHT = outputs
     col_inputs, col_outputs = st.columns([1.3, 1.7])
 
-
     # LEFT COLUMN  SEARCH + INPUTS
-
     with col_inputs:
         st.markdown("### Model Inputs")
         st.caption("v.2.1 (XGBoost)")
 
-        # Search bar lives INSIDE the left column
+        # Search bar inside left column
         st.markdown("**Search Events**")
         search_query = st.text_input(
             "Search by artist, team, or event",
@@ -170,9 +168,7 @@ with tab_dashboard:
 
         run = st.button("Run Prediction")
 
-
     # RIGHT COLUMN  PREDICTION + CHARTS
-
     with col_outputs:
         st.markdown("### Prediction & Recommendation")
 
@@ -298,136 +294,6 @@ with tab_dashboard:
         else:
             st.info("Set inputs on the left and click **Run Prediction** to see results.")
 
-
-    #output
-    with col_outputs:
-        st.markdown("### Prediction & Recommendation")
-
-        # Dummy model
-        def demo_fair_value(price, days, inv_level):
-            if price <= 0:
-                base = 200.0
-            else:
-                base = price
-
-            # inventory effect
-            if "High" in inv_level:
-                inv_factor = 0.9
-            elif "Medium" in inv_level:
-                inv_factor = 1.0
-            else:
-                inv_factor = 1.1
-
-            # time effect
-            if days > 60:
-                time_factor = 0.95
-            elif days > 14:
-                time_factor = 1.0
-            else:
-                time_factor = 1.05
-
-            return round(base * inv_factor * time_factor, 2)
-
-        if run:
-            fair_value = demo_fair_value(current_price, days_until, inventory)
-            diff = current_price - fair_value
-
-            # Predicted Fair Value card
-            st.markdown(
-                f"""
-                <div style="
-                    padding: 1rem 1.2rem;
-                    border-radius: 0.75rem;
-                    background: #111827;
-                    border: 1px solid #4b5563;
-                    margin-bottom: 0.75rem;
-                ">
-                    <div style="font-size: 0.9rem; color:#9ca3af;">Predicted Fair Value</div>
-                    <div style="font-size: 2rem; font-weight: 700; color:#f9fafb;">
-                        ${fair_value:,.2f}
-                    </div>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-
-            # Recommendation text
-            if diff > 20:
-                rec_label = "WAIT - Prices expected to drop"
-                bg_color = "#78350f"       
-                border_color = "#fbbf24"
-                text_color = "#fef9c3"
-            elif -20 <= diff <= 20:
-                rec_label = "FAIR - Listing is close to model value"
-                bg_color = "#14532d"  
-                border_color = "#4ade80"
-                text_color = "#bbf7d0"
-            else:
-                rec_label = "BUY - Current listing looks underpriced"
-                bg_color = "#064e3b"   
-                border_color = "#34d399"
-                text_color = "#a7f3d0"
-
-            st.markdown(
-                f"""
-                <div style="
-                    padding: 0.9rem 1.1rem;
-                    border-radius: 0.75rem;
-                    background: {bg_color};
-                    border: 1px solid {border_color};
-                    font-weight: 600;
-                    margin-bottom: 1rem;
-                    color: {text_color};
-                ">
-                    {rec_label}
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-
-            # Price Volatility Analysis
-            st.markdown("### Price Volatility Analysis")
-            st.caption("Predicted Historical Avg")
-
-            days_back = np.arange(-30, 1)
-            center = fair_value * 0.9
-            volatility = center + np.sin(days_back / 4) * 10
-            vol_df = pd.DataFrame(
-                {
-                    "Days from Today": days_back,
-                    "Estimated Market Price": volatility,
-                }
-            ).set_index("Days from Today")
-
-            st.line_chart(vol_df)
-
-            # Model comparison text
-            st.caption(
-                "Model Comparison: k-NN (Similarity) vs XGBoost (Features). "
-                "XGBoost shows lower RMSE on held-out test data."
-            )
-
-            # Model explainability placeholder
-            st.markdown("### Model Explainability (SHAP Values)")
-            st.write("Which features drive the price prediction most? (Example)")
-
-            feat_names = [
-                "days_until_event",
-                "inventory_count",
-                "artist_popularity_score",
-                "venue_capacity",
-                "is_weekend",
-                "primary_market_sold_out",
-            ]
-            importance_values = [0.30, 0.20, 0.18, 0.14, 0.10, 0.08]
-            expl_df = pd.DataFrame(
-                {"Feature": feat_names, "Importance": importance_values}
-            ).set_index("Feature")
-
-            st.bar_chart(expl_df)
-
-        else:
-            st.info("Set inputs on the left and click **Run Prediction** to see results.")
 
 
 # METHODOLOGY
