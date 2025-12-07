@@ -97,20 +97,20 @@ with tab_dashboard:
         placeholder="Try 'Drake', 'Miami Heat', 'Taylor Swift'...",
     )
 
-        st.markdown(
-            '<div class="hero-subtitle">'
-            "Data-driven price prediction using XGBoost Regression and Market Aggregation."
-            "</div>",
-            unsafe_allow_html=True,
-        )
+    st.markdown(
+        '<div class="hero-subtitle">'
+        "Data-driven price prediction using XGBoost Regression and Market Aggregation."
+        "</div>",
+        unsafe_allow_html=True,
+    )
         # pills 
-        st.markdown(
-            '''
-            <div class="pill"><span class="dot"></span>Popular: Drake</div>
-            <div class="pill"><span class="dot"></span>Miami Heat</div>
-            ''',
-            unsafe_allow_html=True,
-        )
+    st.markdown(
+        '''
+        <div class="pill"><span class="dot"></span>Popular: Drake</div>
+        <div class="pill"><span class="dot"></span>Miami Heat</div>
+        ''',
+        unsafe_allow_html=True,
+    )
 
     with col_hero_right:
         st.write("")
