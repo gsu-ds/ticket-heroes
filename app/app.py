@@ -112,26 +112,26 @@ with tab_dashboard:
     # input
     
     with col_inputs:
-    st.markdown("### Model Inputs")
-    st.caption("v.2.1 (XGBoost)")
+        st.markdown("### Model Inputs")
+        st.caption("v.2.1 (XGBoost)")
 
-    EVENTS = [
-        "Drake: It's All A Blur",
-        "Taylor Swift: The Eras Tour",
-        "Bad Bunny: Most Wanted Tour",
-        "Miami Heat vs Lakers",
-    ]
+        EVENTS = [
+            "Drake: It's All A Blur",
+            "Taylor Swift: The Eras Tour",
+            "Bad Bunny: Most Wanted Tour",
+            "Miami Heat vs Lakers",
+            ]
 
-    QUICK_EVENTS = [
-        "Drake: It's All A Blur",
-        "Miami Heat vs Lakers",
-    ]
+        QUICK_EVENTS = [
+            "Drake: It's All A Blur",
+            "Miami Heat vs Lakers",
+        ]
 
-    if "selected_event" not in st.session_state:
-        st.session_state["selected_event"] = EVENTS[0]
+        if "selected_event" not in st.session_state:
+            st.session_state["selected_event"] = EVENTS[0]
 
-    if "search_text" not in st.session_state:
-        st.session_state["search_text"] = ""
+        if "search_text" not in st.session_state:
+            st.session_state["search_text"] = ""
         
     # Search bar
 
