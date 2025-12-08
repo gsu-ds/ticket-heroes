@@ -35,8 +35,7 @@ Models are evaluated using **R^2**, **RMSE**, **MAE**, and **directional accurac
 
 ### Market Panel (Primary Dataset)
 - **Unit of Analysis:** Geographic market × Year
-- **Time Period:** 2022-2025 (4 years)
-- **Observations:** 400 (100 markets × 4 years)
+- **Time Period:** 2022-2025 (4 years))
 - **Key Variables:**
   - Outcomes: `gross`, `tickets`, `shows`, `avg_price`
   - Lagged: `gross_lag1`, `tickets_lag1`, etc.
@@ -46,7 +45,6 @@ Models are evaluated using **R^2**, **RMSE**, **MAE**, and **directional accurac
 ### Artist Panel (Secondary Dataset)
 - **Unit of Analysis:** Artist × Year
 - **Time Period:** 2025 only
-- **Observations:** 1,287 unique artists
 - **Key Variables:**
   - Performance: `num_events`, `avg_ticket_price`, `unique_venues`
   - Spotify: `artist_popularity`, `artist_followers`
