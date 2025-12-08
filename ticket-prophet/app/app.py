@@ -104,14 +104,14 @@ with tab_dashboard:
         )
         st.markdown(
             '<div class="hero-subtitle">'
-            "Data-driven price prediction using XGBoost Regression and Market Aggregation."
+            "Data-driven price prediction using Random Forest and Market Aggregation."
             "</div>",
             unsafe_allow_html=True,
         )
 
     with col_hero_right:
         st.write("")
-        st.metric("Model Version", "v2.1", "XGBoost")
+        st.metric("Model Version", "v2.1", "RandomForest")
 
     st.markdown("---")
 
@@ -140,7 +140,7 @@ with tab_dashboard:
     # LEFT COLUMN  SEARCH + INPUTS
     with col_inputs:
         st.markdown("### Model Inputs")
-        st.caption("v.2.1 (XGBoost)")
+        st.caption("v.2.1 (RandomForest)")
 
         # Search bar inside left column
         st.markdown("**Search Events**")
