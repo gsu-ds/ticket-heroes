@@ -70,4 +70,4 @@ Models are evaluated using **R^2**, **RMSE**, **MAE**, and **directional accurac
 
 ## Project Website
 
-👉 [We Could be Heroes...](https://gsu-ds.github.io/ticket-heroes/)
+👉 [We Could be Prophets...](https://ticket-heroes-dokfwynss7bwctcs993ymx.streamlit.app/)
