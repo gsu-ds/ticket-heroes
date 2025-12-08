@@ -13,14 +13,16 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
 
 from xgboost import XGBRegressor
-from catboost import CatBoostRegressor
+
 
 
 # CONFIG
 
-PROJECT_NAME = "ticket_prophet_models" 
+PROJECT_NAME = "ticket_prophet_models"  # W&B project name
 
-DATA_PATH = Path("data/processed/FINAL_market_panel.csv")
+# Adjust this if CSV lives somewhere else in the repo
+DATA_PATH = Path("ticket-heroes/data/processed/FINAL_market_panel.csv")
+
 
 TARGET_COL = "avg_price"
 
@@ -44,6 +46,9 @@ FEATURE_COLS = [
 TEST_SIZE = 0.20
 VAL_SIZE = 0.15
 RANDOM_STATE = 42
+
+
+# HELPERS
 
 
 def load_data(path: Path) -> pd.DataFrame:
@@ -99,7 +104,6 @@ def main():
     # 1) Load data
     df = load_data(DATA_PATH)
 
-    # Keep only rows where features + target are all present
     cols_needed = FEATURE_COLS + [TARGET_COL]
     missing_in_df = [c for c in cols_needed if c not in df.columns]
     if missing_in_df:
@@ -123,17 +127,16 @@ def main():
         random_state=RANDOM_STATE,
     )
 
-    # 3) Scale features for KNN (and any others that need scaling)
+    # 3) Scale features for KNN
     scaler = StandardScaler()
     X_train_scaled = scaler.fit_transform(X_train)
     X_val_scaled = scaler.transform(X_val)
     X_test_scaled = scaler.transform(X_test)
 
     # 4) Setup W&B
-    # Make sure you have run `wandb login` once in your environment
     wandb.login()
 
-    # 5) Define models
+    # 5) Define models (no CatBoost)
     models = {
         # Baseline
         "baseline_knn": KNeighborsRegressor(
@@ -162,23 +165,13 @@ def main():
             random_state=RANDOM_STATE,
             n_jobs=-1,
         ),
-        "catboost": CatBoostRegressor(
-            depth=6,
-            learning_rate=0.05,
-            iterations=400,
-            loss_function="RMSE",
-            random_seed=RANDOM_STATE,
-            verbose=False,
-        ),
     }
 
-    # Which models use scaled features
     use_scaled = {
         "baseline_knn": True,
         "decision_tree": False,
         "random_forest": False,
         "xgboost": False,
-        "catboost": False,
     }
 
     # 6) Train & evaluate each model
