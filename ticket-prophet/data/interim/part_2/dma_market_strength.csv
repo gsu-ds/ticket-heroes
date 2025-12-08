@@ -1,0 +1,101 @@
+market,dma_static_strength,annual_sales_avg,avg_ticket_price_dma,annual_sales_current
+Albany-Schenectady-Troy,151.0,51.75,62.115,53
+Albuquerque-Santa Fe,163.0,28.0,59.72,28
+Atlanta,203.25,92.5,94.8725,92
+Austin,174.5,76.25,93.24,83
+Bakersfield,86.25,13.0,70.1575,8
+Baltimore,183.25,57.25,87.7975,68
+Bangor,55.5,7.0,76.15,9
+Biloxi-Gulfport,53.0,6.0,80.6,6
+Birmingham (Anniston and Tuscaloosa),166.0,52.0,75.34,52
+Boise,110.25,39.25,60.5475,36
+Boston (Manchester),202.0,97.0,90.94,97
+Buffalo,157.5,50.5,71.955,59
+Cedar Rapids-Waterloo-Iowa City & Dubuque,117.0,13.0,53.78,13
+"Charleston, SC",124.5,36.0,65.185,32
+Charleston-Huntington,134.5,11.25,62.3475,21
+Charlotte,189.5,80.25,87.0725,78
+Chattanooga,123.5,2.0,61.845,1
+Chicago,208.0,96.5,89.16,96
+Cincinnati,174.75,59.75,65.965,61
+Cleveland-Akron (Canton),192.0,70.0,97.59,70
+"Columbia, SC",135.0,5.0,57.69,5
+"Columbus, OH",177.5,66.0,86.5,58
+Dallas-Ft. Worth,206.25,92.25,92.705,91
+Denver,194.5,87.5,86.4,89
+Des Moines-Ames,144.0,57.0,90.28,57
+Detroit,197.0,87.25,80.11500000000001,86
+El Paso (Las Cruces),122.0,25.0,94.89,25
+Evansville,103.66666666666669,15.333333333333334,50.47666666666667,15
+Fort Myers-Naples,158.0,43.0,73.75,43
+Fort Smith-Fayetteville-Springdale-Rogers,115.0,22.0,59.48,22
+Fort Wayne,101.0,7.0,51.18,7
+Fresno-Visalia,156.75,40.25,83.8075,44
+Grand Rapids-Kalamazoo-Battle Creek,168.0,49.0,59.97,49
+Green Bay-Appleton,142.66666666666666,34.0,78.42333333333333,39
+Greensboro-High Point-Winston-Salem,165.0,65.0,68.08,65
+Greenville-Spartanburg-Asheville-Anderson,175.0,60.0,66.62,60
+Harlingen-Weslaco-Brownsville-McAllen,131.0,34.0,100.82,34
+Harrisburg-Lancaster-Lebanon-York,169.0,54.0,99.53,54
+Hartford-New Haven,179.0,72.25,71.32,69
+Honolulu,142.0,4.0,106.26,4
+Houston,204.0,85.25,96.5025,80
+Huntsville-Decatur (Florence),136.0,27.0,63.91,27
+Indianapolis,185.5,77.75,64.0275,81
+Jacksonville,168.0,67.25,71.71,66
+Johnstown-Altoona-State College,99.0,26.0,92.81,26
+Kansas City,177.75,62.25,79.75,62
+Knoxville,149.75,41.5,75.0875,46
+Las Vegas,171.0,99.0,181.155,99
+Lexington,148.0,41.5,68.4975,48
+Lincoln-Hastings-Kearney,105.25,25.0,70.335,12
+Little Rock-Pine Bluff,153.0,40.0,72.69,40
+Los Angeles,209.0,98.5,113.3725,98
+Louisville,162.25,50.25,75.035,33
+Madison,133.5,26.75,50.97,38
+Memphis,159.75,38.0,70.47,16
+Miami-Ft. Lauderdale,193.0,88.0,128.69,88
+Milwaukee,174.0,67.5,93.8875,63
+Minneapolis-St. Paul,196.0,82.5,83.185,79
+Missoula,49.0,24.5,57.7975,35
+Mobile-Pensacola (Fort Walton Beach),154.0,3.0,68.51,3
+Nashville,183.25,88.5,83.815,84
+New Orleans,161.0,43.0,95.6,29
+New York,210.0,99.5,100.7375,100
+Norfolk-Portsmouth-Newport News,167.0,45.0,67.79,45
+Oklahoma City,166.5,49.75,69.4075,55
+Omaha,138.0,65.25,70.08500000000001,64
+Orlando-Daytona Beach-Melbourne,196.0,82.0,101.2,82
+Palm Springs,66.5,57.0,121.965,56
+Peoria-Bloomington,89.0,20.0,54.26,20
+Philadelphia,206.75,88.75,86.8375,90
+Phoenix (Prescott),199.0,87.0,103.58,87
+Pittsburgh,185.5,77.25,78.935,76
+"Portland, OR",188.0,71.5,68.39,73
+Providence-New Bedford,159.25,34.0,63.8325,42
+Raleigh-Durham (Fayetteville),189.0,71.0,79.14,71
+Reno,105.75,29.0,80.78,17
+Richmond-Petersburg,155.0,37.0,61.31,37
+Sacramento-Stockton-Modesto,191.0,72.0,82.41,72
+Salt Lake City,180.75,65.25,66.27250000000001,75
+San Antonio,180.0,69.5,95.265,74
+San Diego,182.25,76.5,89.425,77
+San Francisco-Oakland-San Jose,202.3333333333333,95.33333333333331,96.33333333333331,95
+Santa Barbara-Santa Maria-San Luis Obispo,88.0,14.0,74.23,14
+Savannah,123.66666666666669,14.666666666666666,86.77333333333333,18
+Seattle-Tacoma,198.25,89.25,84.075,93
+Shreveport-Texarkana,120.0,2.0,61.57,2
+Sioux Falls-Mitchell,100.75,27.5,67.8575,23
+South Bend-Elkhart,112.75,28.0,60.055,31
+Spokane,142.33333333333334,45.0,66.90666666666665,50
+"Springfield, MO",137.0,11.0,63.13,11
+St. Louis,188.0,70.25,79.78,67
+Syracuse,124.75,42.25,74.7525,41
+Tampa-St. Petersburg (Sarasota),200.0,85.0,92.67,85
+Toledo,131.25,17.0,55.48,30
+Tucson (Sierra Vista),146.0,10.0,49.23,10
+Tulsa,150.5,48.0,67.54499999999999,47
+"Washington, D.C. (Hagerstown)",203.0,94.0,78.98,94
+West Palm Beach-Fort Pierce,172.25,52.25,66.5975,51
+Wichita-Hutchinson Plus,140.0,19.0,59.82,19
+Wilkes Barre-Scranton-Hazleton,152.0,24.0,58.98,24
