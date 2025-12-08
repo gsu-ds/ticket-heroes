@@ -334,7 +334,7 @@ with tab_methodology:
 
     st.markdown("#### 2. Model Selection")
     st.write(
-        "- **Primary (Error-Based):** RandomForest to capture complex feature interactions.\n"
+        "- **Primary:** RandomForest to capture complex feature interactions.\n"
         "- **Secondary (Similarity-Based):** k-Nearest Neighbors as a benchmark to compare each "
         "ticket against similar historical events."
     )
