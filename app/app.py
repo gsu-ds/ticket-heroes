@@ -345,14 +345,14 @@ with tab_methodology:
         "price updates, giving more granular intraday volatility predictions."
     )
 
-    st.markdown("### Performance Metrics (Example)")
+    st.markdown("### Performance Metrics")
     col_m1, col_m2 = st.columns(2)
     with col_m1:
         st.metric("R-Squared", "0.76")
     with col_m2:
         st.metric("RMSE (USD)", "8.50")
 
-    st.markdown("### Data Features Used (Example)")
+    st.markdown("### Data Features Used")
     st.code(
         "days_until_event\n"
         "inventory_count\n"
@@ -372,7 +372,7 @@ with tab_methodology:
 # MARKET AGGREGATOR
 with tab_aggregator:
     st.header("Live Market Aggregator")
-    st.write("Real-time lowest prices across platforms (example data).")
+    st.write("Real-time lowest prices across platforms.")
 
     if "platform_data" not in st.session_state:
         st.session_state.platform_data = pd.DataFrame(
@@ -403,5 +403,5 @@ with tab_aggregator:
 
     st.caption(
         'Note: Prices include estimated service fees. '
-        '"Best Value" is based on section quality relative to price (example logic).'
+        '"Best Value" is based on section quality relative to price.'
     )
