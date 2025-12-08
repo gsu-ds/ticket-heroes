@@ -77,7 +77,9 @@ docs/_build/
 target/
 archive/
 notebooks/
-
+/workspaces/ticket-heroes/ticket-prophet/data/external/weather_master.csv
+/workspaces/ticket-heroes/ticket-prophet/data/external/weather_master.csv/
+data/external/weather_master.csv
 # Jupyter Notebook
 .ipynb_checkpoints
 
