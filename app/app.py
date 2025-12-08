@@ -99,7 +99,6 @@ with tab_dashboard:
         )
         st.markdown(
             '<div class="hero-subtitle">'
-            "Data-driven price prediction using XGBoost Regression and Market Aggregation. "
             "Data-driven price prediction using Random Forest and Market Aggregation."
             "</div>",
             unsafe_allow_html=True,
@@ -107,7 +106,6 @@ with tab_dashboard:
 
     with col_hero_right:
         st.write("")
-        st.metric("Model Version", "v2.1", "XGBoost")
         st.metric("Model Version", "v2.1", "RandomForest")
 
     st.markdown("---")
@@ -137,7 +135,6 @@ with tab_dashboard:
     # LEFT COLUMN  SEARCH + INPUTS
     with col_inputs:
         st.markdown("### Model Inputs")
-        st.caption("v.2.1 (XGBoost)")
         st.caption("v.2.1 (RandomForest)")
 
         # Search bar inside left column
@@ -291,8 +288,8 @@ with tab_dashboard:
 
             # Model comparison text
             st.caption(
-                "Model Comparison: k-NN (Similarity) vs XGBoost (Features). "
-                "XGBoost shows lower RMSE on held-out test data."
+                "Model Comparison: k-NN (Similarity) vs RandomForest (Features). "
+                "RandomForest shows lower RMSE on held-out test data."
             )
 
             # Model Explainability (dummy feature importance)
@@ -337,7 +334,7 @@ with tab_methodology:
 
     st.markdown("#### 2. Model Selection")
     st.write(
-        "- **Primary (Error-Based):** XGBoost Regressor to capture complex feature interactions.\n"
+        "- **Primary (Error-Based):** RandomForest to capture complex feature interactions.\n"
         "- **Secondary (Similarity-Based):** k-Nearest Neighbors as a benchmark to compare each "
         "ticket against similar historical events."
     )
@@ -351,9 +348,9 @@ with tab_methodology:
     st.markdown("### Performance Metrics (Example)")
     col_m1, col_m2 = st.columns(2)
     with col_m1:
-        st.metric("R-Squared", "0.87")
+        st.metric("R-Squared", "0.76")
     with col_m2:
-        st.metric("RMSE (USD)", "12.40")
+        st.metric("RMSE (USD)", "8.50")
 
     st.markdown("### Data Features Used (Example)")
     st.code(
