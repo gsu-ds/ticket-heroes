@@ -74,8 +74,18 @@ with tab_dashboard:
     from PIL import Image
     from pathlib import Path
 
-    LOGO_PATH = Path(__file__).parent / "TicketProphetLogo.png"
-    logo = Image.open(LOGO_PATH)
+    APP_DIR = Path(__file__).resolve().parent
+    candidate_paths = [
+        APP_DIR / "TicketProphetLogo.png",
+        APP_DIR / "assets" / "TicketProphetLogo.png",
+        APP_DIR.parent / "TicketProphetLogo.png",
+    ]
+
+    logo = None
+    for p in candidate_paths:
+        if p.exists():
+            logo = Image.open(p)
+            break
 
     st.markdown(
         """
@@ -92,8 +102,11 @@ with tab_dashboard:
 
     col_logo, col_title = st.columns([0.3, 1.7])
     with col_logo:
-        st.image(logo, width=120)  # adjust size here
-    
+        if logo is not None:
+            st.image(logo, width=120)
+        else:
+            st.markdown("### TicketProphet")
+
     # Hero section
     col_hero_left, col_hero_right = st.columns([2, 1])
 
