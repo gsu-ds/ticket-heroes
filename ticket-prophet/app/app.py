@@ -2,38 +2,15 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from datetime import datetime
-from pathlib import Path
-from PIL import Image
-import joblib
 
 # Page config
+
 st.set_page_config(
     page_title="Ticket Hero | ML Approaches for Event Price Prediction",
     page_icon="🎫",
     layout="wide",
 )
 
-# Paths
-APP_DIR = Path(__file__).parent
-LOGO_PATH = APP_DIR / "TicketProphetLogo.png"
-MODEL_PATH = APP_DIR / "models" / "rf_model.joblib"
-
-
-@st.cache_resource
-def load_model():
-    """Load trained Random Forest model from disk."""
-    try:
-        model = joblib.load(MODEL_PATH)
-        return model
-    except Exception as e:
-        st.warning(
-            f"Could not load trained Random Forest model from {MODEL_PATH}. "
-            "Using demo logic instead."
-        )
-        return None
-
-
-rf_model = load_model()
 
 # dark theme
 st.markdown(
@@ -59,12 +36,12 @@ st.markdown(
         align-items: center;
         padding: 0.25rem 0.9rem;
         border-radius: 999px;
-        background: #111827;
-        color: #f9fafb;
+        background: #111827;           /* dark pill */
+        color: #f9fafb;                /* white text */
         font-size: 0.85rem;
         font-weight: 500;
         margin-right: 0.4rem;
-        border: 1px solid #4b5563;
+        border: 1px solid #4b5563;     /* subtle outline */
     }
     .pill + .pill {
         margin-left: 0.15rem;
@@ -73,7 +50,7 @@ st.markdown(
         width: 0.4rem;
         height: 0.4rem;
         border-radius: 999px;
-        background: #f97316;
+        background: #f97316;           /* orange dot */
         margin-right: 0.4rem;
     }
     </style>
@@ -90,9 +67,16 @@ tab_dashboard, tab_methodology, tab_aggregator = st.tabs(
 )
 
 
-# ============= DASHBOARD =============
+# DASHBOARD 
+
 with tab_dashboard:
-    # Logo + hero
+    # Load and display logo
+    from PIL import Image
+    from pathlib import Path
+
+    LOGO_PATH = Path(__file__).parent / "TicketProphetLogo.png"
+    logo = Image.open(LOGO_PATH)
+
     st.markdown(
         """
         <style>
@@ -108,10 +92,12 @@ with tab_dashboard:
 
     col_logo, col_title = st.columns([0.3, 1.7])
     with col_logo:
-        if LOGO_PATH.exists():
-            logo = Image.open(LOGO_PATH)
-            st.image(logo, width=120)
-    with col_title:
+        st.image(logo, width=120)  # adjust size here
+    
+    # Hero section
+    col_hero_left, col_hero_right = st.columns([2, 1])
+
+    with col_hero_left:
         st.markdown(
             '<div class="hero-title">Never Overpay for Live Events Again.</div>',
             unsafe_allow_html=True,
@@ -123,7 +109,6 @@ with tab_dashboard:
             unsafe_allow_html=True,
         )
 
-    col_hero_left, col_hero_right = st.columns([2, 1])
     with col_hero_right:
         st.write("")
         st.metric("Model Version", "v2.1", "RandomForest")
@@ -134,8 +119,8 @@ with tab_dashboard:
     st.header("Live Event Analytics")
     st.write(
         "This dashboard demonstrates our core regression model. "
-        "Static features (market strength, sales momentum) and event-level signals "
-        "are used to estimate a fair market value versus the current list price."
+        "Static features (venue capacity, artist popularity) and dynamic snapshots "
+        "(inventory, days left) are used to estimate true market value versus the current list price."
     )
 
     # Shared state + events
@@ -152,10 +137,10 @@ with tab_dashboard:
     # Two-column layout: LEFT = inputs, RIGHT = outputs
     col_inputs, col_outputs = st.columns([1.3, 1.7])
 
-    # ----- LEFT COLUMN: SEARCH + INPUTS -----
+    # LEFT COLUMN  SEARCH + INPUTS
     with col_inputs:
         st.markdown("### Model Inputs")
-        st.caption("v2.1 (Random Forest Regression)")
+        st.caption("v.2.1 (RandomForest)")
 
         # Search bar inside left column
         st.markdown("**Search Events**")
@@ -177,7 +162,10 @@ with tab_dashboard:
             filtered_events = EVENTS.copy()
 
         # Event dropdown (filtered)
-        event = st.selectbox("Event / Artist", filtered_events)
+        event = st.selectbox(
+            "Event / Artist",
+            filtered_events,
+        )
 
         # Remaining inputs
         days_until = st.slider(
@@ -204,11 +192,11 @@ with tab_dashboard:
 
         run = st.button("Run Prediction")
 
-    # ----- RIGHT COLUMN: PREDICTION + CHARTS -----
+    # RIGHT COLUMN  PREDICTION + CHARTS
     with col_outputs:
         st.markdown("### Prediction & Recommendation")
 
-        # Fallback demo model if RF isn't available
+        # Dummy model for now
         def demo_fair_value(price, days, inv_level):
             if price <= 0:
                 base = 200.0
@@ -231,39 +219,8 @@ with tab_dashboard:
 
             return round(base * inv_factor * time_factor, 2)
 
-        # Helper to build model input row
-        def build_model_input(days_until, inventory_label, current_price):
-            inv_map = {
-                "High (>2k)": 2,
-                "Medium (500–2k)": 1,
-                "Low (<500)": 0,
-            }
-            inv_code = inv_map.get(inventory_label, 1)
-
-            # NOTE: Adjust these feature names to match your actual RF training features.
-            # This is a simple example using three inputs.
-            row = {
-                "days_until_event": days_until,
-                "inventory_level_code": inv_code,
-                "current_price_input": current_price,
-            }
-            return pd.DataFrame([row])
-
         if run:
-            # Use RF model if loaded; otherwise, fallback
-            if rf_model is not None:
-                input_df = build_model_input(days_until, inventory, current_price)
-                try:
-                    fair_value = float(rf_model.predict(input_df)[0])
-                except Exception as e:
-                    st.warning(
-                        "Random Forest model loaded but prediction failed; "
-                        "falling back to demo logic."
-                    )
-                    fair_value = demo_fair_value(current_price, days_until, inventory)
-            else:
-                fair_value = demo_fair_value(current_price, days_until, inventory)
-
+            fair_value = demo_fair_value(current_price, days_until, inventory)
             diff = current_price - fair_value
 
             # Predicted Fair Value card
@@ -332,22 +289,25 @@ with tab_dashboard:
 
             st.line_chart(vol_df)
 
-            # Model comparison text (updated to Random Forest vs KNN)
+            # Model comparison text
             st.caption(
-                "Model Comparison: Baseline k-NN vs Random Forest. "
-                "Random Forest achieved the best RMSE and R² on held-out test data."
+                "Model Comparison: k-NN (Similarity) vs RandomForest (Features). "
+                "RandomForest shows lower RMSE on held-out test data."
             )
 
             # Model Explainability (dummy feature importance)
-            st.markdown("### Model Explainability (Feature Importance Example)")
+            st.markdown("### Model Explainability (SHAP Values)")
             st.write("Which features drive the price prediction most? (Example)")
 
             feat_names = [
                 "days_until_event",
-                "inventory_level_code",
-                "current_price_input",
+                "inventory_count",
+                "artist_popularity_score",
+                "venue_capacity",
+                "is_weekend",
+                "primary_market_sold_out",
             ]
-            importance_values = [0.40, 0.30, 0.30]
+            importance_values = [0.30, 0.20, 0.18, 0.14, 0.10, 0.08]
             expl_df = (
                 pd.DataFrame({"Feature": feat_names, "Importance": importance_values})
                 .set_index("Feature")
@@ -359,52 +319,52 @@ with tab_dashboard:
             st.info("Set inputs on the left and click **Run Prediction** to see results.")
 
 
-# ============= METHODOLOGY =============
+
+# METHODOLOGY
+
 with tab_methodology:
     st.header("Project Methodology")
 
     st.write(
         "To handle volatile ticket markets, we move beyond simple time-series forecasting "
-        "and treat each market-year observation as a feature-rich data point influenced by "
-        "market strength, sales momentum, and pricing dynamics."
+        "and treat each ticket observation as a feature-rich data point influenced by "
+        "market conditions."
     )
 
     st.markdown("#### 1. Data Acquisition")
     st.write(
-        "We combine secondary-market pricing data with market-level features such as DMA rank, "
-        "annual sales, and price premiums relative to average ticket prices."
+        "We combine secondary-market listings (e.g., StubHub, TickPick) with primary event "
+        "metadata such as artist popularity indices and venue capacity."
     )
 
     st.markdown("#### 2. Model Selection")
     st.write(
-        "- **Primary (Feature-Based):** Random Forest Regressor to capture nonlinear feature interactions.\n"
-        "- **Baseline (Similarity-Based):** k-Nearest Neighbors as a benchmark that compares each market "
-        "to similar historical markets."
+        "- **Primary (Error-Based):** RandomForest to capture complex feature interactions.\n"
+        "- **Secondary (Similarity-Based):** k-Nearest Neighbors as a benchmark to compare each "
+        "ticket against similar historical events."
     )
 
-    st.markdown("#### 3. Future Work")
+    st.markdown("#### 3. Future Work: RNNs")
     st.write(
-        "Future versions could incorporate sequence models or more granular intraday price data to track "
-        "fine-grained volatility and dynamic pricing strategies."
+        "Future versions could incorporate recurrent models (e.g., LSTM) to track sequences of "
+        "price updates, giving more granular intraday volatility predictions."
     )
 
-    st.markdown("### Performance Metrics (Example)")
+    st.markdown("### Performance Metrics")
     col_m1, col_m2 = st.columns(2)
     with col_m1:
-        st.metric("R-Squared (Test)", "0.76")
+        st.metric("R-Squared", "0.76")
     with col_m2:
-        st.metric("RMSE (USD, Test)", "8.50")
+        st.metric("RMSE (USD)", "8.50")
 
-    st.markdown("### Data Features Used (Example)")
+    st.markdown("### Data Features Used")
     st.code(
-        "year\n"
-        "dma_rank\n"
-        "annual_sales_current\n"
-        "gross_growth\n"
-        "ticket_growth\n"
-        "sales_momentum\n"
-        "avg_ticket_price_dma\n"
-        "price_premium_vs_dma",
+        "days_until_event\n"
+        "inventory_count\n"
+        "artist_popularity_score\n"
+        "venue_city_tier\n"
+        "is_weekend\n"
+        "primary_market_sold_out",
         language="text",
     )
 
@@ -415,7 +375,8 @@ with tab_methodology:
     )
 
 
-# ============= MARKET AGGREGATOR =============
+# MARKET AGGREGATOR 
+
 with tab_aggregator:
     st.header("Live Market Aggregator")
     st.write("Real-time lowest prices across platforms (example data).")
